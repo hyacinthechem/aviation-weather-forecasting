@@ -8,40 +8,50 @@ import torch.nn.functional as F
 from tqdm import tqdm
 
 import torch
+import numpy as np
 import pandas as pd
+
+# Set device
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
+
+## Helper function to convert data to tensor safely
+def to_tensor(data, device):
+    """Convert data to tensor, handling various input types"""
+    if isinstance(data, torch.Tensor):
+        tensor = data.clone().detach().float()
+    elif isinstance(data, pd.DataFrame):
+        tensor = torch.tensor(data.values.astype(np.float32), dtype=torch.float32)
+    elif isinstance(data, pd.Series):
+        tensor = torch.tensor(data.values.astype(np.float32), dtype=torch.float32)
+    elif isinstance(data, np.ndarray):
+        tensor = torch.tensor(data.astype(np.float32), dtype=torch.float32)
+    else:
+        tensor = torch.tensor(np.array(data, dtype=np.float32), dtype=torch.float32)
+
+    return tensor.to(device)
+
 
 ## Convert preprocessed data into tensors
 
 # Wind
-x_train_processed_wind = torch.tensor(x_train_processed_wind, dtype=torch.float32)
-y_train_processed_wind = torch.tensor(y_train_wspeed, dtype=torch.float32)
-
-x_test_processed_wind = torch.tensor(x_test_processed_wind, dtype=torch.float32)
-y_test_processed_wind = pd.DataFrame(y_test_wspeed, columns=['wind'])
-y_test_processed_wind = torch.tensor(y_test_processed_wind, dtype=torch.float32)
+x_train_processed_wind = to_tensor(x_train_processed_wind, device)
+y_train_processed_wind = to_tensor(y_train_wspeed, device).reshape(-1, 1)  # Reshape to [N, 1]
+x_test_processed_wind = to_tensor(x_test_processed_wind, device)
+y_test_processed_wind = to_tensor(y_test_wspeed, device).reshape(-1, 1)  # Reshape to [N, 1]
 
 # Visibility
-x_train_processed_vsby = torch.tensor(x_train_processed_vsby, dtype=torch.float32)
-y_train_processed_vsby = torch.tensor(y_train_vsby, dtype=torch.float32)
-
-x_test_processed_vsby = torch.tensor(x_test_processed_vsby, dtype=torch.float32)
-y_test_processed_vsby = pd.DataFrame(y_test_vsby, columns=['wind'])
-y_test_processedvsby = torch.tensor(y_test_processed_vsby, dtype=torch.float32)
+x_train_processed_vsby = to_tensor(x_train_processed_vsby, device)
+y_train_processed_vsby = to_tensor(y_train_vsby, device).reshape(-1, 1)  # Reshape to [N, 1]
+x_test_processed_vsby = to_tensor(x_test_processed_vsby, device)
+y_test_processed_vsby = to_tensor(y_test_vsby, device).reshape(-1, 1)  # Reshape to [N, 1]
 
 # Temperature
-x_train_processed_temp = torch.tensor(x_train_processed_temp, dtype=torch.float32)
-y_train_processed_temp = torch.tensor(y_train_temp, dtype=torch.float32)
+x_train_processed_temp = to_tensor(x_train_processed_temp, device)
+y_train_processed_temp = to_tensor(y_train_temp, device).reshape(-1, 1)  # Reshape to [N, 1]
+x_test_processed_temp = to_tensor(x_test_processed_temp, device)
+y_test_processed_temp = to_tensor(y_test_temp, device).reshape(-1, 1)  # Reshape to [N, 1]
 
-x_test_processed_temp = torch.tensor(x_test_processed_temp, dtype=torch.float32)
-y_test_processed_temp = pd.DataFrame(y_test_temp, columns=['wind'])
-y_test_processed_temp = torch.tensor(y_test_processed_temp, dtype=torch.float32)
-
-
-if torch.cuda.is_available():
-    x_train_processed_wind = x_train_processed_wind.cuda()
-    y_train_processed_wind = y_train_processed_wind.cuda()
-    x_test_processed_wind = x_test_processed_wind.cuda()
-    y_test_processed_wind = y_test_processed_wind.cuda()
 
 ## Define module for pytorch NN
 class WeatherNN(torch.nn.Module):
@@ -58,6 +68,7 @@ class WeatherNN(torch.nn.Module):
 
 ## representation of neural network with 10 input size, 1 output size and 64 hidden size
 weather_nn = WeatherNN(input_size=10, output_size=1, hidden_size=64)
+weather_nn = weather_nn.to(device)  # Move model to device
 print(weather_nn)
 
 """
@@ -79,8 +90,8 @@ linear transfer function used
 ## method to train model
 def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=True, progress_bar=True):
     loss_history = []
-    accuracy_history = []
-    epoch_iter = ( tqdm(range(epochs)) if progress_bar else range(epochs))
+    mae_history = []
+    epoch_iter = (tqdm(range(epochs)) if progress_bar else range(epochs))
 
     for epoch in epoch_iter:
         # set all gradients to zero
@@ -92,8 +103,8 @@ def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=Tru
         optimizer.step() # update gradients
 
         # compute accuracy
-        accuracy = torch.mean(torch.argmax(logits, dim=1) == y_train).float()
-        accuracy_history.append(accuracy.item())
+        mae = torch.mean(torch.abs(logits-y_train)).item()
+        mae_history.append(mae)
         loss_history.append(loss.item())
 
     if plot:
@@ -102,13 +113,13 @@ def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=Tru
         ax[0].set_title('Loss over epochs')
         ax[0].set_xlabel('Epochs')
         ax[0].set_ylabel('Loss')
-        ax[1].plot(accuracy_history)
+        ax[1].plot(mae_history)
         ax[1].set_title('Accuracy over epochs')
         ax[1].set_xlabel('Epochs')
         ax[1].set_ylabel('Accuracy')
         plt.show()
 
-    return nn, loss_history, accuracy_history
+    return nn, loss_history, mae_history
 
 
 ## Training for predicting wind speed
@@ -116,21 +127,21 @@ def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=Tru
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_wind, y_train_processed_wind, loss_function, optimizer, epochs=50)
+model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_wind, y_train_processed_wind, loss_function, optimizer, epochs=200)
 
 # Training for predicting visibility
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_vsby, y_train_processed_vsby, loss_function, optimizer, epochs=50 )
+model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_vsby, y_train_processed_vsby, loss_function, optimizer, epochs=200)
 
 # Training for predicting temperature
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_temp, y_train_processed_temp, loss_function, optimizer, epochs=50)
+model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_temp, y_train_processed_temp, loss_function, optimizer, epochs=200)
 
 
 if __name__ == '__main__':
