@@ -82,9 +82,9 @@ class WeatherNN(torch.nn.Module):
         return x
 
 ## representation of neural network with 10 input size, 1 output size and 64 hidden size
-weather_nn = WeatherNN(input_size=10, output_size=1, hidden_size=64)
-weather_nn = weather_nn.to(device)  # Move model to device
-print(weather_nn)
+weather_nn_extended = WeatherNN(input_size=10, output_size=1, hidden_size=64)
+weather_nn_extended = weather_nn_extended.to(device)  # Move model to device
+print(weather_nn_extended)
 
 """
 Schultz et al.
@@ -174,23 +174,23 @@ def train_model(nn, x_train, y_train, x_val, y_val, loss_function, optimizer, ep
 ## Training for predicting wind speed
 
 loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn, x_train_processed_wind, y_train_processed_wind, x_val_processed_wind, y_val_processed_wind, loss_function, optimizer, epochs=200)
+model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_wind, y_train_processed_wind, x_val_processed_wind, y_val_processed_wind, loss_function, optimizer, epochs=200)
 
 # Training for predicting visibility
 
 loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn, x_train_processed_vsby, y_train_processed_vsby, x_val_processed_vsby, y_val_processed_vsby, loss_function, optimizer, epochs=200)
+model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_vsby, y_train_processed_vsby, x_val_processed_vsby, y_val_processed_vsby, loss_function, optimizer, epochs=200)
 
 # Training for predicting temperature
 
 loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn, x_train_processed_temp, y_train_processed_temp, x_val_processed_temp, y_val_processed_temp, loss_function,optimizer, epochs=200)
+model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_temp, y_train_processed_temp, x_val_processed_temp, y_val_processed_temp, loss_function,optimizer, epochs=200)
 
 
 if __name__ == '__main__':
