@@ -176,21 +176,46 @@ def train_model(nn, x_train, y_train, x_val, y_val, loss_function, optimizer, ep
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_wind, y_train_processed_wind, x_val_processed_wind, y_val_processed_wind, loss_function, optimizer, epochs=200)
+model_wind, loss_history_wind, accuracy_history_wind, val_loss_history_wind, val_accuracy_history_wind = (
+    train_model(
+        weather_nn_extended,
+        x_train_processed_wind,
+        y_train_processed_wind,
+        x_val_processed_wind,
+        y_val_processed_wind,
+        loss_function,
+        optimizer,
+        epochs=200))
 
 # Training for predicting visibility
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_vsby, y_train_processed_vsby, x_val_processed_vsby, y_val_processed_vsby, loss_function, optimizer, epochs=200)
+model_vsby, loss_history_vsby, accuracy_history_vsby, val_loss_history_vsby, val_accuracy_history_vsby = train_model(
+    weather_nn_extended,
+    x_train_processed_vsby,
+    y_train_processed_vsby,
+    x_val_processed_vsby,
+    y_val_processed_vsby,
+    loss_function,
+    optimizer,
+    epochs=200)
 
 # Training for predicting temperature
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended, x_train_processed_temp, y_train_processed_temp, x_val_processed_temp, y_val_processed_temp, loss_function,optimizer, epochs=200)
+model_temp, loss_history_temp, accuracy_history_temp, val_loss_history_temp, val_accuracy_history_temp = train_model(
+    weather_nn_extended,
+    x_train_processed_temp,
+    y_train_processed_temp,
+    x_val_processed_temp,
+    y_val_processed_temp,
+    loss_function,
+    optimizer,
+    epochs=200)
 
 
 if __name__ == '__main__':

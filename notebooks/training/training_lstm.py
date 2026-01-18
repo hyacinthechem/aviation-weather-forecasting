@@ -101,8 +101,14 @@ train_dataset = TensorDataset(x_train_processed_wind_tensor, y_train_processed_w
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 ## Training for predicting wind speed
-model, loss_history, mae_history = train_lstm(lstm_weather, train_loader, loss_function, optimizer, epochs=100,
-                                              plot=True, progress_bar=True)
+model_wind, loss_history_wind, mae_history_wind = train_lstm(
+    lstm_weather,
+    train_loader,
+    loss_function,
+    optimizer,
+    epochs=100,
+    plot=True, progress_bar=True
+)
 
 ## Training for predicting visibility
 x_train_processed_vsby_tensor = to_tensor(x_train_processed_vsby, device_obj).unsqueeze(1)
@@ -111,8 +117,15 @@ y_train_processed_vsby_tensor = to_tensor(y_train_vsby, device_obj).reshape(-1, 
 train_dataset = TensorDataset(x_train_processed_vsby_tensor, y_train_processed_vsby_tensor)
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-model, loss_history, mae_history = train_lstm(lstm_weather, train_loader, loss_function, optimizer, epochs=100,
-                                              plot=True, progress_bar=True)
+model_vsby, loss_history_vsby, mae_history_vsby = (
+    train_lstm(
+        lstm_weather,
+        train_loader,
+        loss_function,
+        optimizer,
+        epochs=100,
+        plot=True, progress_bar=True)
+)
 
 # Training for predicting temperature
 x_train_processed_temp_tensor = to_tensor(x_train_processed_temp, device_obj).unsqueeze(1)
@@ -120,5 +133,11 @@ y_train_processed_temp_tensor = to_tensor(y_train_temp, device_obj).reshape(-1, 
 
 train_dataset = TensorDataset(x_train_processed_temp_tensor, y_train_processed_temp_tensor)
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-model, loss_history, mae_history = train_lstm(lstm_weather, train_loader, loss_function, optimizer, epochs=100,
-                                              plot=True, progress_bar=True)
+
+model_temp, loss_history_temp, mae_history_temp = (
+    train_lstm(lstm_weather,
+               train_loader,
+               loss_function,
+               optimizer, epochs=100,
+               plot=True, progress_bar=True
+    ))

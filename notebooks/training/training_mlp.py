@@ -127,21 +127,40 @@ def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=Tru
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_wind, y_train_processed_wind, loss_function, optimizer, epochs=200)
+model_wind, loss_history_wind, accuracy_history_wind = train_model(
+    weather_nn,
+    x_train_processed_wind,
+    y_train_processed_wind,
+    loss_function,
+    optimizer,
+    epochs=200)
 
 # Training for predicting visibility
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_vsby, y_train_processed_vsby, loss_function, optimizer, epochs=200)
+model_vsby, loss_history_vsby, accuracy_history_vsby = train_model(
+    weather_nn,
+    x_train_processed_vsby,
+    y_train_processed_vsby,
+    loss_function, optimizer,
+    epochs=200)
 
 # Training for predicting temperature
 
 loss_function = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
 
-model, loss_history, accuracy_history = train_model(weather_nn, x_train_processed_temp, y_train_processed_temp, loss_function, optimizer, epochs=200)
+model_temp, loss_history_temp, accuracy_history_temp = (
+    train_model(
+        weather_nn,
+        x_train_processed_temp,
+        y_train_processed_temp,
+        loss_function,
+        optimizer,
+        epochs=200)
+)
 
 
 if __name__ == '__main__':
