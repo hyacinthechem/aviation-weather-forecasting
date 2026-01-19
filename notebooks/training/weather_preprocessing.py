@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -115,21 +114,21 @@ def create_preprocessor(target_name):
 ## Wind target
 wind_preprocessor = create_preprocessor('sknt')
 x_train_processed_wind = wind_preprocessor.fit_transform(x_train_wspeed)
-x_val_processed_wind = wind_preprocessor.fit_transform(x_val_wspeed)
-x_test_processed_wind = wind_preprocessor.fit_transform(x_test_wspeed)
+x_val_processed_wind = wind_preprocessor.transform(x_val_wspeed)
+x_test_processed_wind = wind_preprocessor.transform(x_test_wspeed)
 
 
 ## Temperature target
 temperature_preprocessor = create_preprocessor('tmpf')
 x_train_processed_temp = temperature_preprocessor.fit_transform(x_train_temp)
-x_val_processed_temp = temperature_preprocessor.fit_transform(x_val_temp)
-x_test_processed_temp= temperature_preprocessor.fit_transform(x_test_temp)
+x_val_processed_temp = temperature_preprocessor.transform(x_val_temp)
+x_test_processed_temp = temperature_preprocessor.transform(x_test_temp)
 
 ## Visibility target
 visibility_preprocessor = create_preprocessor('vsby')
 x_train_processed_vsby = visibility_preprocessor.fit_transform(x_train_vsby)
-x_val_processed_vsby = visibility_preprocessor.fit_transform(x_val_vsby)
-x_test_processed_vsby = visibility_preprocessor.fit_transform(x_test_vsby)
+x_val_processed_vsby = visibility_preprocessor.transform(x_val_vsby)
+x_test_processed_vsby = visibility_preprocessor.transform(x_test_vsby)
 
 # Feature selection to uncover hidden correlations between features of importance
 from sklearn.feature_selection import SelectKBest, mutual_info_regression, SequentialFeatureSelector
