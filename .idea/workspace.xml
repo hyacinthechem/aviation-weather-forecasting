@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3c7797fc-00af-4ff6-b3d4-a67315cfed34" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/training/training_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/training/training_lstm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +56,8 @@
     &quot;Python.weather_preprocessing.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;model__training&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/training&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;model-testing&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/testing&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -69,6 +68,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks/testing" />
       <recent name="$PROJECT_DIR$/notebooks/training" />
       <recent name="$PROJECT_DIR$/notebooks/preprocessing" />
     </key>
@@ -176,7 +176,8 @@
       <updated>1766015612145</updated>
       <workItem from="1766015613223" duration="23524000" />
       <workItem from="1767444404873" duration="67395000" />
-      <workItem from="1768539771502" duration="1807000" />
+      <workItem from="1768539771502" duration="4120000" />
+      <workItem from="1768973604721" duration="310000" />
     </task>
     <servers />
   </component>
