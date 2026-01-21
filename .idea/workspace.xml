@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c7797fc-00af-4ff6-b3d4-a67315cfed34" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/notebooks/testing/testing_mlp.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/testing/weather_preprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/training/training_mlp_extended.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/training/training_mlp_extended.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Jupyter Notebook" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -51,24 +48,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.training_mlp.executor": "Run",
-    "Python.weather_preprocessing (1).executor": "Run",
-    "Python.weather_preprocessing.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "model-testing",
-    "last_opened_file_path": "/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/testing",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.training_mlp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.weather_preprocessing (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.weather_preprocessing.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;model-testing&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/testing&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/notebooks/testing" />
@@ -180,6 +177,7 @@
       <workItem from="1766015613223" duration="23524000" />
       <workItem from="1767444404873" duration="67395000" />
       <workItem from="1768539771502" duration="4120000" />
+      <workItem from="1768973604721" duration="310000" />
     </task>
     <servers />
   </component>

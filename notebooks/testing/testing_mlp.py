@@ -1,7 +1,18 @@
+
+# track test loss
+
 import numpy as np
+import matplotlib.pyplot as plt
+
+from notebooks.preprocessing.weather_preprocessing import x_test_processed_wind, x_test_processed_vsby, \
+    x_test_processed_temp
 from notebooks.training import training_mlp
 from notebooks.training import training_mlp_extended
-import matplotlib.pyplot as plt
+from notebooks.training.training_mlp import weather_nn_wind, weather_nn_temp, weather_nn_vsby, y_test_processed_vsby, \
+    y_test_processed_wind, y_test_processed_temp
+from notebooks.training.training_mlp_extended import weather_nn_extended, weather_nn_extended_vsby, \
+    weather_nn_extended_temp
+
 # track test loss
 
 test_loss = 0.0
@@ -85,11 +96,9 @@ def test_model(trained_model, x_test, y_test, model_type, target_name):
 
   return predictions_np, y_test_np, residuals_np
 
-from notebooks.training.training_mlp import weather_nn, x_test_processed_wind, y_test_processed_wind, x_test_processed_vsby, y_test_processed_vsby, x_test_processed_temp, y_test_processed_temp
-
 # test base model on predicting wind speed
 pred_wind, actual_wind, residual_wind = test_model(
-    weather_nn,
+    weather_nn_wind,
     x_test_processed_wind,
     y_test_processed_wind,
     model_type='Base Model',
@@ -98,7 +107,7 @@ pred_wind, actual_wind, residual_wind = test_model(
 
 # test base model on predicting visibility
 pred_visibility, actual_visibility, residual_visibility = test_model(
-    weather_nn,
+    weather_nn_vsby,
     x_test_processed_vsby,
     y_test_processed_vsby,
     model_type='Base Model',
@@ -107,15 +116,13 @@ pred_visibility, actual_visibility, residual_visibility = test_model(
 
 # test base model on predicting temperature
 pred_temp, actual_temp, residual_temp = test_model(
-    weather_nn,
+    weather_nn_temp,
     x_test_processed_temp,
     y_test_processed_temp,
     model_type='Base Model',
     target_name='Temperature'
 )
 
-from notebooks.training.training_mlp import x_test_processed_wind, y_test_processed_wind, x_test_processed_vsby, y_test_processed_vsby, x_test_processed_temp, y_test_processed_temp
-from notebooks.training.training_mlp_extended import weather_nn_extended
 
 # test extended model on predicting wind speed
 pred_wind_ext, actual_wind_ext, residual_wind_ext = test_model(
@@ -128,7 +135,7 @@ pred_wind_ext, actual_wind_ext, residual_wind_ext = test_model(
 
 # test extended model on predicting visibility
 pred_visibility_ext, actual_visibility_ext, residual_visibility_ext = test_model(
-    weather_nn_extended,
+    weather_nn_extended_vsby,
     x_test_processed_vsby,
     y_test_processed_vsby,
     model_type='Extended Model',
@@ -137,7 +144,7 @@ pred_visibility_ext, actual_visibility_ext, residual_visibility_ext = test_model
 
 # test extended model on predicting temperature
 pred_temp_ext, actual_temp_ext, residual_temp_ext = test_model(
-    weather_nn_extended,
+    weather_nn_extended_temp,
     x_test_processed_temp,
     y_test_processed_temp,
     model_type='Extended Model',
@@ -146,7 +153,7 @@ pred_temp_ext, actual_temp_ext, residual_temp_ext = test_model(
 
 # Overall metrics comparison between base model and extended model
 n_metrics = len(mae_history)
-labels = ['Base-Wind', 'Base-Visibility', 'Base-Temperature', 'Base-Visibility', 'Extended-Wind', 'Extended-Visibility', 'Extended-Temperature'][:n_metrics]
+labels = ['Base-Wind', 'Base-Visibility', 'Base-Temperature', 'Extended-Wind', 'Extended-Visibility', 'Extended-Temperature'][:n_metrics]
 
 fig, axes = plt.subplots(1, 3, figsize=(16,5))
 fig.suptitle('Model Error Metrics Comparison', fontsize=16, fontweight='bold')

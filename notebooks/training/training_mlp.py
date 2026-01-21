@@ -121,47 +121,22 @@ def train_model(nn, x_train, y_train, loss_function, optimizer, epochs, plot=Tru
 
     return nn, loss_history, mae_history
 
+loss_function = torch.nn.MSELoss()
 
 ## Training for predicting wind speed
-
-loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
-
-model_wind, loss_history_wind, accuracy_history_wind = train_model(
-    weather_nn,
-    x_train_processed_wind,
-    y_train_processed_wind,
-    loss_function,
-    optimizer,
-    epochs=200)
+weather_nn_wind = WeatherNN(input_size=10, output_size=1, hidden_size=64).to(device)
+optimizer_wind = torch.optim.Adam(weather_nn_wind.parameters(), lr=0.001)
+model_wind, loss_history_wind, accuracy_history_wind = train_model(weather_nn_wind, x_train_processed_wind, y_train_processed_wind, loss_function, optimizer_wind, epochs=200)
 
 # Training for predicting visibility
-
-loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
-
-model_vsby, loss_history_vsby, accuracy_history_vsby = train_model(
-    weather_nn,
-    x_train_processed_vsby,
-    y_train_processed_vsby,
-    loss_function, optimizer,
-    epochs=200)
+weather_nn_vsby = WeatherNN(input_size=10, output_size=1, hidden_size=64).to(device)
+optimizer_vsby = torch.optim.Adam(weather_nn_vsby.parameters(), lr=0.001)
+model_vsby, loss_history_vsby, accuracy_history_vsby = train_model(weather_nn_vsby, x_train_processed_vsby, y_train_processed_vsby,loss_function, optimizer_vsby, epochs=200)
 
 # Training for predicting temperature
-
-loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn.parameters(), lr=0.001)
-
-model_temp, loss_history_temp, accuracy_history_temp = (
-    train_model(
-        weather_nn,
-        x_train_processed_temp,
-        y_train_processed_temp,
-        loss_function,
-        optimizer,
-        epochs=200)
-)
-
+weather_nn_temp = WeatherNN(input_size=10, output_size=1, hidden_size=64).to(device)
+optimizer_temp = torch.optim.Adam(weather_nn_temp.parameters(), lr=0.001)
+model_temp, loss_history_temp, accuracy_history_temp = train_model(weather_nn_temp, x_train_processed_temp, y_train_processed_temp,loss_function, optimizer_temp, epochs=200)
 
 if __name__ == '__main__':
     pass
