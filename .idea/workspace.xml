@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3c7797fc-00af-4ff6-b3d4-a67315cfed34" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/training/training_mlp_extended.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/training/training_mlp_extended.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,29 +49,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Python.training_mlp.executor&quot;: &quot;Run&quot;,
-    &quot;Python.weather_preprocessing (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.weather_preprocessing.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;model-testing&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/testing&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.cloud_cover_preprocessing.executor": "Run",
+    "Python.training_mlp.executor": "Run",
+    "Python.weather_preprocessing (1).executor": "Run",
+    "Python.weather_preprocessing.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "model-fix",
+    "last_opened_file_path": "/Users/hyacinthechemasle/Programming/2025/AIML338/notebooks/preprocessing",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks/preprocessing" />
       <recent name="$PROJECT_DIR$/notebooks/testing" />
       <recent name="$PROJECT_DIR$/notebooks/training" />
-      <recent name="$PROJECT_DIR$/notebooks/preprocessing" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets" />
@@ -80,7 +82,30 @@
       <recent name="$PROJECT_DIR$/Annotated Bibliography" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.training_mlp">
+  <component name="RunManager" selected="Python.weather_preprocessing">
+    <configuration name="cloud_cover_preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AIML338" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/notebooks/classification" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/notebooks/classification/cloud_cover_preprocessing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="training_mlp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AIML338" />
       <option name="ENV_FILES" value="" />
@@ -152,9 +177,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.weather_preprocessing" />
+        <item itemvalue="Python.cloud_cover_preprocessing" />
         <item itemvalue="Python.training_mlp" />
         <item itemvalue="Python.weather_preprocessing (1)" />
-        <item itemvalue="Python.weather_preprocessing" />
       </list>
     </recent_temporary>
   </component>
@@ -185,7 +211,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AIML338$weather_preprocessing.coverage" NAME="weather_preprocessing Coverage Results" MODIFIED="1768192282611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/notebooks/preprocessing" />
+    <SUITE FILE_PATH="coverage/AIML338$cloud_cover_preprocessing.coverage" NAME="cloud_cover_preprocessing Coverage Results" MODIFIED="1769995722976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/notebooks/classification" />
+    <SUITE FILE_PATH="coverage/AIML338$weather_preprocessing.coverage" NAME="weather_preprocessing Coverage Results" MODIFIED="1769996397031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/notebooks/preprocessing" />
     <SUITE FILE_PATH="coverage/AIML338$weather_preprocessing__1_.coverage" NAME="weather_preprocessing (1) Coverage Results" MODIFIED="1768267338684" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/notebooks/training" />
     <SUITE FILE_PATH="coverage/AIML338$training_mlp.coverage" NAME="training_mlp Coverage Results" MODIFIED="1768270395393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/notebooks/training" />
   </component>

@@ -56,14 +56,43 @@ val = val.dropna(subset=['tmpf','dwpf', 'relh', 'vsby', 'feel','skyc1'])
 test = test.dropna(subset=['tmpf','dwpf', 'relh', 'vsby', 'feel','skyc1'])
 
 
+"""
+Fix:
+Change from a nowcasting model to a forecasting model
+Shifts target columns up by one to use features in previous
+columns to predict target at 30 minute intervals ( predicts 30 minutes ahead t+1 ).
+
+"""
+train['sknt-target'] = train['sknt'].shift(-1)
+train['vsby-target'] = train['vsby'].shift(-1)
+train['tmpf-target'] = train['tmpf'].shift(-1)
+
+val['sknt-target'] = val['sknt'].shift(-1)
+val['vsby-target'] = val['vsby'].shift(-1)
+val['tmpf-target'] = val['tmpf'].shift(-1)
+
+test['sknt-target'] = test['sknt'].shift(-1)
+test['vsby-target'] = test['vsby'].shift(-1)
+test['tmpf-target'] = test['tmpf'].shift(-1)
+
+## Need to delete rows with NaN values for rows at the bottom that don't have targets after shift occurs
+train = train.dropna(subset=['sknt-target', 'vsby-target', 'tmpf-target'])
+val = val.dropna(subset=['sknt-target', 'vsby-target', 'tmpf-target'])
+test = test.dropna(subset=['sknt-target', 'vsby-target', 'tmpf-target'])
+
 train.head()
 
 def train_target_selection(train, val, test, target_name):
-    x_train, y_train = train.drop(columns=[target_name]), train[target_name]
 
-    x_val, y_val = val.drop(columns=[target_name]), val[target_name]
+    # Use the shifted target col
+    target_col = f'{target_name}-target'
 
-    x_test, y_test = test.drop(columns=[target_name]), test[target_name]
+    # Drop both the current and shifted target col from training
+    x_train, y_train = train.drop(columns=[target_name, target_col]), train[target_col]
+
+    x_val, y_val = val.drop(columns=[target_name, target_col]), val[target_col]
+
+    x_test, y_test = test.drop(columns=[target_name, target_col]), test[target_col]
 
     return x_train, y_train, x_val, y_val, x_test, y_test
 
@@ -135,21 +164,24 @@ from sklearn.feature_selection import SelectKBest, mutual_info_regression, Seque
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
-def train_target_regressor(x_train, y_train, x_test, target_name):
+def train_target_regressor(x_train, y_train, x_test, y_test, target_name):
     model = KNeighborsRegressor(n_neighbors=5)
     model.fit(x_train, y_train)
     y_pred = model.predict(x_test)
-    print(f"RMSE: {target_name, mean_squared_error(y_test_wspeed, y_pred)}")
-    print(f"R2 Score: {target_name,r2_score(y_test_wspeed, y_pred)}")
+    print(f"RMSE: {target_name, mean_squared_error(y_test, y_pred)}")
+    print(f"R2 Score: {target_name,r2_score(y_test, y_pred)}")
+
+
+print("Evaluation for all features")
 
 ## Train for "wind speed" target
-train_target_regressor(x_train_processed_wind, y_train_wspeed, x_test_processed_wind, "Wind speed")
+train_target_regressor(x_train_processed_wind, y_train_wspeed, x_test_processed_wind, y_test_wspeed,"Wind speed")
 
 ## Train for "temperature" target
-train_target_regressor(x_train_processed_temp, y_train_temp, x_test_processed_temp, "Temperature")
+train_target_regressor(x_train_processed_temp, y_train_temp, x_test_processed_temp, y_test_temp,  "Temperature")
 
 ## Train for "visibility" target
-train_target_regressor(x_train_processed_vsby, y_train_vsby, x_test_processed_vsby, "Visibility")
+train_target_regressor(x_train_processed_vsby, y_train_vsby, x_test_processed_vsby, y_test_vsby,"Visibility")
 
 
 def select_k_best(x_train, y_train, x_test, preprocessor, target_name):
@@ -172,41 +204,41 @@ select_k_best_temperature = select_k_best(x_train_processed_temp, y_train_temp, 
 
 select_k_best_visibility = select_k_best(x_train_processed_vsby, y_train_vsby, x_test_processed_vsby, visibility_preprocessor,"Visibility")
 
-import matplotlib.pyplot as plt
-from sklearn.feature_selection import SelectKBest
-import seaborn as sns
-import pandas as pd
 
-def visualise_heatmap(x_train_processed, preprocessor, selector, target_name):
-    # Get selected feature names
-    feature_names = preprocessor.get_feature_names_out()
-    selected_feature_names = feature_names[selector.get_support()].tolist()
+## Apply feature selection to reduce to top 5 features
 
-    # Get indices of selected features
-    selected_indices = selector.get_support()
 
-    # Extract selected features from numpy array and convert to DataFrame
-    selected_features_data = pd.DataFrame(
-        x_train_processed[:, selected_indices],
-        columns=selected_feature_names
-    )
+# Wind - reduce to top 5 features
+x_train_processed_wind = select_k_best_wind.transform(x_train_processed_wind)
+x_val_processed_wind = select_k_best_wind.transform(x_val_processed_wind)
+x_test_processed_wind = select_k_best_wind.transform(x_test_processed_wind)
+print(f"Wind features shape (after selection): {x_train_processed_wind.shape}")
 
-    # Calculate correlation matrix
-    correlation_matrix = selected_features_data.corr(method='pearson')
+# Temperature - reduce to top 5 features
+x_train_processed_temp = select_k_best_temperature.transform(x_train_processed_temp)
+x_val_processed_temp = select_k_best_temperature.transform(x_val_processed_temp)
+x_test_processed_temp = select_k_best_temperature.transform(x_test_processed_temp)
+print(f"Temperature features shape (after selection): {x_train_processed_temp.shape}")
 
-    # Plot heatmap
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(data=correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1, fmt='.2f', linewidths=.5)
-    plt.title(f'Pearson Correlation Heatmap for {target_name} Top Five Features')
-    plt.tight_layout()
-    plt.show()
+# Visibility - reduce to top 5 features
+x_train_processed_vsby = select_k_best_visibility.transform(x_train_processed_vsby)
+x_val_processed_vsby = select_k_best_visibility.transform(x_val_processed_vsby)
+x_test_processed_vsby = select_k_best_visibility.transform(x_test_processed_vsby)
+print(f"Visibility features shape (after selection): {x_train_processed_vsby.shape}")
 
-# Call the function
-visualise_heatmap(x_train_processed_wind, wind_preprocessor, select_k_best_wind, "Wind Speed")
 
-visualise_heatmap(x_train_processed_temp, temperature_preprocessor, select_k_best_temperature, "Temperature")
+# Re-create full feature sets for visualization (heatmap needs all features)
+x_train_wind_full = wind_preprocessor.transform(x_train_wspeed)
+x_train_vsby_full = visibility_preprocessor.transform(x_train_vsby)
+x_train_temp_full = temperature_preprocessor.transform(x_train_temp)
 
-visualise_heatmap(x_train_processed_vsby, visibility_preprocessor, select_k_best_visibility, "Visibility")
+
+from feature_mapping_utility import visualise_heatmap
+visualise_heatmap(x_train_wind_full, wind_preprocessor, select_k_best_wind, "Wind Speed")
+
+visualise_heatmap(x_train_vsby_full, temperature_preprocessor, select_k_best_temperature, "Temperature")
+
+visualise_heatmap(x_train_temp_full, visibility_preprocessor, select_k_best_visibility, "Visibility")
 
 
 

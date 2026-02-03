@@ -184,7 +184,7 @@ weather_nn_extended_vsby = WeatherNN(input_size=10, output_size=1, hidden_size=6
 weather_nn_extended_vsby = weather_nn_extended.to(device)  # Move model to device
 
 loss_function = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(weather_nn_extended.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(weather_nn_extended_vsby.parameters(), lr=0.001)
 
 model, loss_history, accuracy_history, val_loss_history, val_accuracy_history = train_model(weather_nn_extended_vsby, x_train_processed_vsby, y_train_processed_vsby, x_val_processed_vsby, y_val_processed_vsby, loss_function, optimizer, epochs=200)
 
